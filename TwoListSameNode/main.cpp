@@ -38,7 +38,8 @@ int main(int argc, const char * argv[])
     CreateList(&pFirstList);
     PrintList(pFirstList);
 
-    CreateSecondList(&pSecondList, pFirstList);
+    CreateSecondList(&pSecondList, pFirstList->next->next);
+    PrintList(pSecondList);
 
 
 
@@ -47,7 +48,7 @@ int main(int argc, const char * argv[])
 
 void CreateList(Node **pHead)
 {
-    cout << "请输入节点值创建链表，输入<=0时结束" << endl;
+    cout << "请输入节点值创建第一个链表，输入<=0时结束" << endl;
 
     *pHead = new Node;
     memset(*pHead, 0, sizeof(Node));
@@ -75,7 +76,32 @@ void CreateList(Node **pHead)
 
 void CreateSecondList(Node **pHead, Node *pFirstList)
 {
+    cout << "请输入节点值创建第二个链表，输入<=0时结束" << endl;
 
+    *pHead = new Node;
+    memset(*pHead, 0, sizeof(Node));
+    (*pHead)->next = NULL;
+
+    Node *pListNode = new Node;
+    memset(pListNode, 0, sizeof(Node));
+    pListNode->next = NULL;
+
+    Node *pMove = *pHead;
+
+    cin >> pListNode->element;
+    while (pListNode->element > 0)
+    {
+        pMove->next = pListNode;
+        pMove = pMove->next;
+
+        pListNode = new Node;
+        memset(pListNode, 0, sizeof(Node));
+        pListNode->next = NULL;
+
+        cin >> pListNode->element;
+    }
+
+    pMove->next = pFirstList;
 }
 
 void PrintSameNode(Node *pFirstList, Node *pSecondList)
@@ -92,6 +118,8 @@ void PrintList(Node *pListHead)
         cout << pMove->element << " ";
         pMove = pMove->next;
     }
+    
+    cout << endl;
 }
 
 
