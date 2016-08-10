@@ -77,29 +77,12 @@ void CreateList(Node **pHead)
 
 void CreateSecondList(Node **pHead, Node *pFirstList)
 {
-    cout << "请输入节点值创建第二个链表，输入<=0时结束" << endl;
-
-    *pHead = new Node;
-    memset(*pHead, 0, sizeof(Node));
-    (*pHead)->next = NULL;
-
-    Node *pListNode = new Node;
-    memset(pListNode, 0, sizeof(Node));
-    pListNode->next = NULL;
+    CreateList(pHead);
 
     Node *pMove = *pHead;
-
-    cin >> pListNode->element;
-    while (pListNode->element > 0)
+    while (pMove->next != NULL)
     {
-        pMove->next = pListNode;
         pMove = pMove->next;
-
-        pListNode = new Node;
-        memset(pListNode, 0, sizeof(Node));
-        pListNode->next = NULL;
-
-        cin >> pListNode->element;
     }
 
     pMove->next = pFirstList;
