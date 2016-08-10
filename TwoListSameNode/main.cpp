@@ -25,10 +25,9 @@ void CreateList(Node **pHead);
 
 // 创建第二个链表，让其最后的指针指向第一个链表中的某个节点
 void CreateSecondList(Node **pHead, Node *pFirstList);
-
 void PrintSameNode(Node *pFirstList, Node *pSecondList);
-
 void PrintList(Node *pListHead);
+int ListLength(Node *pListHead);
 
 int main(int argc, const char * argv[])
 {
@@ -37,11 +36,13 @@ int main(int argc, const char * argv[])
 
     CreateList(&pFirstList);
     PrintList(pFirstList);
+    ListLength(pFirstList);
 
     CreateSecondList(&pSecondList, pFirstList->next->next);
     PrintList(pSecondList);
+    ListLength(pSecondList);
 
-
+    PrintSameNode(pFirstList, pSecondList);
 
     return 0;
 }
@@ -106,7 +107,45 @@ void CreateSecondList(Node **pHead, Node *pFirstList)
 
 void PrintSameNode(Node *pFirstList, Node *pSecondList)
 {
+    int pFirstListLength = ListLength(pFirstList);
+    int pSecondListLength = ListLength(pSecondList);
 
+    Node *pFirstMove = pFirstList->next;
+    Node *pSecondMove = pSecondList->next;
+
+    if (pFirstListLength > pSecondListLength)
+    {
+        int startStep = pFirstListLength - pSecondListLength;
+        while (startStep--)
+        {
+            pFirstMove = pFirstMove->next;
+        }
+    }
+    else if (pFirstListLength == pSecondListLength)
+    {
+
+    }
+    else
+    {
+        int startStep = pSecondListLength - pFirstListLength;
+        while (startStep--)
+        {
+            pSecondMove = pSecondMove->next;
+        }
+    }
+
+    while (pFirstMove != pSecondMove)
+    {
+        pFirstMove = pFirstMove->next;
+        pSecondMove = pSecondMove->next;
+    }
+
+    if (pFirstMove == pSecondMove)
+    {
+        cout << "第一个公共节点为:" << pFirstMove->element <<endl;
+    }
+
+    return;
 }
 
 void PrintList(Node *pListHead)
@@ -118,10 +157,25 @@ void PrintList(Node *pListHead)
         cout << pMove->element << " ";
         pMove = pMove->next;
     }
-    
+
     cout << endl;
 }
 
+int ListLength(Node *pListHead)
+{
+    int length = 0;
+
+    Node *pMove = pListHead->next;
+    while (pMove != NULL)
+    {
+        length++;
+        pMove = pMove->next;
+    }
+
+    cout << "链表的长度为：" << length << endl;
+
+    return length;
+}
 
 
 
